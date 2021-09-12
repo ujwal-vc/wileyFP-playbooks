@@ -4,7 +4,8 @@
   become: yes
   tasks:
     - name: create a folder example
-         file: /home/ansible/example
+      file: 
+         path: /home/ansible/example
          state: directory
          mode: '0777'
 
