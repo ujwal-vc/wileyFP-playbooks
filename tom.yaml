@@ -24,6 +24,7 @@
       unarchive:
          src: /home/ansible/tomcat/apache-tomcat-10.1.0-M4.tar.gz
          dest: /home/ansible/tomcat/
+         remote_src: yes
 
          #    - name: change ownership of downloaded files
          #      shell: 
