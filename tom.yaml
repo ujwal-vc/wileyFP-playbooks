@@ -53,6 +53,12 @@
          recurse: yes
          state: directory
 
+    - name: Copy Tomcat service from local to remote
+      copy:
+        src: /home/ansible/tomcat.service
+        dest: /etc/systemd/system/
+        mode: 0755
+
     - name: copying file to webapps directory
       shell:
          cmd: cp /home/ansible/example/addressbook.war /opt/tomcat/webapps/
