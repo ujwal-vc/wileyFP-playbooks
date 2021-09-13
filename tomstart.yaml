@@ -1,0 +1,44 @@
+---
+- hosts: webservers
+  remote_user: ansible
+  become: yes
+  tasks:
+    - name: Install JAVA related Ubuntu packages
+      apt:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - openjdk-8-jdk
+          - tomcat9
+          - tomcat9-examples
+          - tomcat9-docs
+   # - name: changing remote source
+   #    remote_src: yes
+   # - name: copy war
+   #     remote_src: yes
+   #  copy: src=/home/ansible/example/addressbook.war dest=/var/lib/tomcat9/webapps/addressbook.war mode=0744
+    - name: copy war
+      shell:
+        cmd: cp /home/ansible/example/addressbook.war /var/lib/tomcat9/webapps/addressbook.war 
+ 
+    
+    - name: Make sure a service is running
+      ansible.builtin.systemd:
+        state: started
+        enabled: true
+        name: tomcat9
+    
+    - name: Open Tomcat port
+      ufw:
+        state: enabled
+        rule: allow
+        port: "8080"
+        proto: tcp
+
+    - name: Open SSH port
+      ufw:
+        state: enabled
+        rule: allow
+        port: "22"
+        proto: tcp
